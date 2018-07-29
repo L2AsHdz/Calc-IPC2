@@ -2,6 +2,7 @@ package calculadora;
 
 public class CalcUI extends javax.swing.JFrame {
 
+    boolean flagPunto = false;
     public CalcUI() {
         initComponents();
     }
@@ -183,9 +184,19 @@ public class CalcUI extends javax.swing.JFrame {
         btnAC.setText("AC");
         btnAC.setToolTipText("");
         btnAC.setPreferredSize(new java.awt.Dimension(40, 50));
+        btnAC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnACActionPerformed(evt);
+            }
+        });
 
         btnDEL.setText("DEL");
         btnDEL.setPreferredSize(new java.awt.Dimension(40, 50));
+        btnDEL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDELActionPerformed(evt);
+            }
+        });
 
         btnSalir.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnSalir.setText("S");
@@ -359,32 +370,56 @@ public class CalcUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btn9ActionPerformed
 
     private void btnPuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPuntoActionPerformed
-        txtOp.setText(txtOp.getText() + ".");
+        if (!flagPunto) {
+            txtOp.setText(txtOp.getText() + ".");
+            flagPunto = true;
+        }
     }//GEN-LAST:event_btnPuntoActionPerformed
 
     private void btnSumaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSumaActionPerformed
         if (Validaciones.validarSuma(txtOp.getText())) {
         txtOp.setText(txtOp.getText() + "+");
+        flagPunto = false;
         }
     }//GEN-LAST:event_btnSumaActionPerformed
 
     private void btnRestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaActionPerformed
         if (Validaciones.validarResta(txtOp.getText())) {
         txtOp.setText(txtOp.getText() + "-");
+        flagPunto = false;
         }
     }//GEN-LAST:event_btnRestaActionPerformed
 
     private void btnMultiplicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMultiplicacionActionPerformed
         if (Validaciones.validarMultiplicaion(txtOp.getText())) {
         txtOp.setText(txtOp.getText() + "*");
+        flagPunto = false;
         }
     }//GEN-LAST:event_btnMultiplicacionActionPerformed
 
     private void btnDivisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDivisionActionPerformed
         if (Validaciones.validarDivision(txtOp.getText())) {
         txtOp.setText(txtOp.getText() + "/");
+        flagPunto = false;
         }
     }//GEN-LAST:event_btnDivisionActionPerformed
+
+    private void btnDELActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDELActionPerformed
+        String operacion = txtOp.getText();
+        if (!operacion.isEmpty()) {
+            int index = operacion.length();
+            if (operacion.lastIndexOf(".") == (index-1)) {
+                flagPunto = false;
+            }
+            String nuevaOperacion = operacion.substring(0, index-1);
+            txtOp.setText(nuevaOperacion);
+        }
+    }//GEN-LAST:event_btnDELActionPerformed
+
+    private void btnACActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnACActionPerformed
+        txtOp.setText("");
+        flagPunto = false;
+    }//GEN-LAST:event_btnACActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn0;

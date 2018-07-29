@@ -8,7 +8,7 @@ public class Validaciones {
     }
     
     public static boolean validarResta(String operacion){
-        return (!operacion.endsWith("-") && !operacion.contains("+") && !operacion.contains("*")
+        return (!operacion.contains("-") && !operacion.contains("+") && !operacion.contains("*")
         && !operacion.contains("/"));
     }
     
@@ -18,7 +18,7 @@ public class Validaciones {
     }
     
     public static boolean validarDivision(String operacion){
-        return (!operacion.endsWith("/") && !operacion.contains("+") && !operacion.contains("-")
+        return (!operacion.contains("/") && !operacion.contains("+") && !operacion.contains("-")
         && !operacion.contains("*"));
     }
 }
