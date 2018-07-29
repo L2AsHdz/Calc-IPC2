@@ -4,9 +4,22 @@ import java.math.BigInteger;
 
 public class Funciones {
     
+    public static float suma(float[] sumandos){
+    float resultado = 0;
+    for (int i = 0; i < sumandos.length; i++){
+      resultado = resultado + sumandos[i];
+      }
+    return resultado;
+    }
+    
+    public static float resta(float minuendo, float sustraendo){
+        float diferencia = minuendo-sustraendo;
+        return diferencia;
+    }
+    
     public static float multiplicacion(float[] factores){
     float resultado = 1;
-    for (int i = 0; i <= factores.length; i++){
+    for (int i = 0; i < factores.length; i++){
       resultado = resultado * factores[i];
       }
     return resultado;
@@ -15,6 +28,21 @@ public class Funciones {
     public static float division(float divisor, float dividendo){
         float cociente = dividendo/divisor;
         return cociente;
+    }
+    
+    public static float residuo(float divisor, float dividendo){
+        float residuo = dividendo%divisor;
+        return residuo;
+    }
+    
+    public static float raiz(float indice, float radicando){
+        float resultado = (float)Math.pow(radicando, (1/indice));
+        return resultado;
+    }
+    
+    public static float potencia(float exponente, float base){
+        float resultado = (float)Math.pow(base, exponente);
+        return resultado;
     }
     
     public static String factorial(int numero){
