@@ -363,19 +363,27 @@ public class CalcUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPuntoActionPerformed
 
     private void btnSumaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSumaActionPerformed
+        if (Validaciones.validarSuma(txtOp.getText())) {
         txtOp.setText(txtOp.getText() + "+");
+        }
     }//GEN-LAST:event_btnSumaActionPerformed
 
     private void btnRestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaActionPerformed
+        if (Validaciones.validarResta(txtOp.getText())) {
         txtOp.setText(txtOp.getText() + "-");
+        }
     }//GEN-LAST:event_btnRestaActionPerformed
 
     private void btnMultiplicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMultiplicacionActionPerformed
+        if (Validaciones.validarMultiplicaion(txtOp.getText())) {
         txtOp.setText(txtOp.getText() + "*");
+        }
     }//GEN-LAST:event_btnMultiplicacionActionPerformed
 
     private void btnDivisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDivisionActionPerformed
+        if (Validaciones.validarDivision(txtOp.getText())) {
         txtOp.setText(txtOp.getText() + "/");
+        }
     }//GEN-LAST:event_btnDivisionActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
