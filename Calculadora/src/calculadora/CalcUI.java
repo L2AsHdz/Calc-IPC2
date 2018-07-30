@@ -1,11 +1,16 @@
 package calculadora;
 
-import java.awt.event.KeyEvent;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 
 public class CalcUI extends javax.swing.JFrame {
 
+    //las banderas son utilizadas para evitar que en la operacion existan dos 
+    //puntos decimales.
     boolean flagPunto = false;
+    boolean flagAns = false;
     double ans = 0;
     public CalcUI() {
         initComponents();
@@ -60,6 +65,8 @@ public class CalcUI extends javax.swing.JFrame {
         itemCalcDisc = new javax.swing.JMenuItem();
         itemConv = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        itemManual = new javax.swing.JMenuItem();
+        itemDevelopers = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(448, 338));
@@ -379,15 +386,13 @@ public class CalcUI extends javax.swing.JFrame {
         pnlConv.setLayout(pnlConvLayout);
         pnlConvLayout.setHorizontalGroup(
             pnlConvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rbtnHexadecimal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
-            .addGroup(pnlConvLayout.createSequentialGroup()
-                .addComponent(btnConversion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(rbtnHexadecimal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnlConvLayout.createSequentialGroup()
                 .addGroup(pnlConvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rbtnBinario)
-                    .addComponent(rbtnOctal))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(rbtnOctal)
+                    .addComponent(btnConversion, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 40, Short.MAX_VALUE))
         );
         pnlConvLayout.setVerticalGroup(
             pnlConvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -404,7 +409,7 @@ public class CalcUI extends javax.swing.JFrame {
         );
 
         getContentPane().add(pnlConv);
-        pnlConv.setBounds(532, 71, 110, 233);
+        pnlConv.setBounds(532, 71, 140, 233);
 
         btnSalir.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnSalir.setText("S");
@@ -483,6 +488,23 @@ public class CalcUI extends javax.swing.JFrame {
         jMenuBar1.add(mnOpciones);
 
         jMenu2.setText("Acerca de");
+
+        itemManual.setText("Manual de Usuario");
+        itemManual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemManualActionPerformed(evt);
+            }
+        });
+        jMenu2.add(itemManual);
+
+        itemDevelopers.setText("Acerca de los desarrolladores");
+        itemDevelopers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemDevelopersActionPerformed(evt);
+            }
+        });
+        jMenu2.add(itemDevelopers);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -534,6 +556,7 @@ public class CalcUI extends javax.swing.JFrame {
         if (!flagPunto && !txtOp.getText().contains("%")) {
             txtOp.setText(txtOp.getText() + ".");
             flagPunto = true;
+            flagAns = true;
         }
     }//GEN-LAST:event_btnPuntoActionPerformed
 
@@ -541,6 +564,7 @@ public class CalcUI extends javax.swing.JFrame {
         if (Validaciones.validarSuma(txtOp.getText())) {
         txtOp.setText(txtOp.getText() + "+");
         flagPunto = false;
+        flagAns = false;
         }
     }//GEN-LAST:event_btnSumaActionPerformed
 
@@ -548,6 +572,7 @@ public class CalcUI extends javax.swing.JFrame {
         if (Validaciones.validarOperaciones(txtOp.getText())) {
         txtOp.setText(txtOp.getText() + "-");
         flagPunto = false;
+        flagAns = false;
         }
     }//GEN-LAST:event_btnRestaActionPerformed
 
@@ -555,6 +580,7 @@ public class CalcUI extends javax.swing.JFrame {
         if (Validaciones.validarMultiplicaion(txtOp.getText())) {
         txtOp.setText(txtOp.getText() + "*");
         flagPunto = false;
+        flagAns = false;
         }
     }//GEN-LAST:event_btnMultiplicacionActionPerformed
 
@@ -562,9 +588,11 @@ public class CalcUI extends javax.swing.JFrame {
         if (Validaciones.validarOperaciones(txtOp.getText())) {
         txtOp.setText(txtOp.getText() + "/");
         flagPunto = false;
+        flagAns = false;
         }
     }//GEN-LAST:event_btnDivisionActionPerformed
 
+    //elimina el ultimo caracter ingresado.
     private void btnDELActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDELActionPerformed
         String operacion = txtOp.getText();
         if (!operacion.isEmpty()) {
@@ -577,9 +605,11 @@ public class CalcUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDELActionPerformed
 
+    //elimina todos los caracteres.
     private void btnACActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnACActionPerformed
         txtOp.setText("");
         flagPunto = false;
+        flagAns = false;
     }//GEN-LAST:event_btnACActionPerformed
 
     private void btnResiduoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResiduoActionPerformed
@@ -592,6 +622,7 @@ public class CalcUI extends javax.swing.JFrame {
         if (Validaciones.validarOperaciones(txtOp.getText())) {
             txtOp.setText(txtOp.getText() + "R");
             flagPunto = false;
+            flagAns = false;
         }
     }//GEN-LAST:event_btnRaizActionPerformed
 
@@ -599,12 +630,15 @@ public class CalcUI extends javax.swing.JFrame {
         if (Validaciones.validarOperaciones(txtOp.getText())) {
             txtOp.setText(txtOp.getText() + "^");
             flagPunto = false;
+            flagAns = false;
         }
     }//GEN-LAST:event_btnPotenciaActionPerformed
 
     private void btnAnsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnsActionPerformed
-        if (ans != 0) {
+        if (ans != 0 && !flagAns) {
             txtOp.setText(txtOp.getText() + ans);
+            flagAns = true;
+            flagPunto = true;
         }
     }//GEN-LAST:event_btnAnsActionPerformed
 
@@ -612,8 +646,9 @@ public class CalcUI extends javax.swing.JFrame {
         String operacion = txtOp.getText();
         if (Validaciones.validarIgual(operacion)) {
             String resultado = operacion;
-            if (resultado.contains(".")) operacion = resultado.replaceAll("\\.", "0");
 
+            //Verifica que signo es el que existe en la operacion y dependiendo de el
+            //realiza la operacion correspondiente.
             if (operacion.contains("+")) {
                 double[] sumandos = datos(operacion, "\\+");
                 resultado = String.valueOf(Funciones.suma(sumandos));
@@ -637,12 +672,17 @@ public class CalcUI extends javax.swing.JFrame {
                 resultado = String.valueOf(Funciones.potencia(potencia[1], potencia[0]));
             }
 
+            //evita la division entre cero.
             if (operacion.contains("/") || operacion.contains("%")){
                 if (operacion.endsWith("0")) txtOp.setText("No se puede dividir entre 0");
-            }else {
-            txtOp.setText(resultado);
+                else txtOp.setText(resultado);
+            }else{
+                txtOp.setText(resultado);
             }
+            flagAns = true;
+            flagPunto = true;
             
+            //establece el valor de Ans
             if (!resultado.equals(operacion)) ans = Double.parseDouble(resultado);
         }
     }//GEN-LAST:event_btnIgualActionPerformed
@@ -670,6 +710,8 @@ public class CalcUI extends javax.swing.JFrame {
         if (Validaciones.validarIgual(operacion)) {
             String resultado = operacion;
 
+            //Verifiaca que signo se encuentra en la operacion y dependiendo de el 
+            //hace la operacion correspondiente.
             if (operacion.contains("!")) {
                 int factorial = Integer.parseInt(txtOp.getText().substring(0, operacion.indexOf("!")));
                 resultado = Funciones.factorial(factorial);
@@ -689,6 +731,8 @@ public class CalcUI extends javax.swing.JFrame {
         String operacion = txtOp.getText();
         String resultado = "";
         
+        //verifica que radiobutton esta seleccionado para realizar la conversion
+        //correspondiente.
         if (rbtnBinario.isSelected()) {
             try {
                 resultado = Funciones.decToBin(Integer.parseInt(operacion));
@@ -711,6 +755,7 @@ public class CalcUI extends javax.swing.JFrame {
         txtOp.setText(resultado);
     }//GEN-LAST:event_btnConversionActionPerformed
 
+    //configuraciones para regresar al menu estandar
     private void itemEstandarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEstandarActionPerformed
         this.pnlCalcDisc.setVisible(false);
         this.pnlConv.setVisible(false);
@@ -722,6 +767,7 @@ public class CalcUI extends javax.swing.JFrame {
         this.btnAns.setEnabled(true);
     }//GEN-LAST:event_itemEstandarActionPerformed
 
+    //configuraciones para cambiar al menu calculos discretos.
     private void itemCalcDiscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCalcDiscActionPerformed
         this.pnlAritm.setVisible(false);
         this.pnlConv.setVisible(false);
@@ -734,18 +780,35 @@ public class CalcUI extends javax.swing.JFrame {
         this.btnAns.setEnabled(false);
     }//GEN-LAST:event_itemCalcDiscActionPerformed
 
+    //configuraciones para cambiar al menu de conversion numerica.
     private void itemConvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemConvActionPerformed
         this.pnlAritm.setVisible(false);
         this.pnlCalcDisc.setVisible(false);
         this.txtOp.setSize(389, 42);
-        this.pnlEx.setLocation(340, 71);
+        this.pnlEx.setLocation(360, 71);
         this.pnlConv.setLocation(216, 71);
         this.pnlConv.setVisible(true);
-        this.setSize(419, 370);
+        this.setSize(439, 370);
         this.btnPunto.setEnabled(false);
         this.btnAns.setEnabled(false);
     }//GEN-LAST:event_itemConvActionPerformed
 
+    //abre el manual de usuario.
+    private void itemManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemManualActionPerformed
+        try {
+            File objetofile = new File ("manualUsuario.pdf");
+            Desktop.getDesktop().open(objetofile);
+     }catch (IOException ex) {
+            System.out.println(ex);
+     }
+    }//GEN-LAST:event_itemManualActionPerformed
+
+    //una pequeña informacion sobre los desarrolladores.
+    private void itemDevelopersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDevelopersActionPerformed
+        JOptionPane.showMessageDialog(null, "Developers\nAsHdz\nJupiterSmokes");
+    }//GEN-LAST:event_itemDevelopersActionPerformed
+
+    //Salir.
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
@@ -782,7 +845,9 @@ public class CalcUI extends javax.swing.JFrame {
     private javax.swing.JButton btnSuma;
     private javax.swing.JMenuItem itemCalcDisc;
     private javax.swing.JMenuItem itemConv;
+    private javax.swing.JMenuItem itemDevelopers;
     private javax.swing.JMenuItem itemEstandar;
+    private javax.swing.JMenuItem itemManual;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu mnOpciones;
@@ -796,6 +861,8 @@ public class CalcUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtOp;
     // End of variables declaration//GEN-END:variables
 
+    //recie como parametro el string de la operacion y el regex para el split
+    //devuelve un array.
     private double[] datos(String operacion, String splitter){
         String[] split = operacion.split(splitter);
             double[] numeros = new double[split.length];
@@ -805,6 +872,7 @@ public class CalcUI extends javax.swing.JFrame {
             return numeros;
     }
     
+    //lo mismo que la funcion de arriba solo que esta es utilizada para numeros enteros.
     private int[] datos2(String operacion, String splitter){
         String[] split = operacion.split(splitter);
             int[] numeros = new int[split.length];
