@@ -5,42 +5,29 @@ public class Validaciones {
     public static boolean validarSuma(String operacion){
         return (!operacion.endsWith("+") && !operacion.contains("-") && !operacion.contains("*")
         && !operacion.contains("/")&& !operacion.contains("%") && !operacion.contains("^")
-        && !operacion.contains("R"));
-    }
-    
-    public static boolean validarResta(String operacion){
-        return (!operacion.contains("-") && !operacion.contains("+") && !operacion.contains("*")
-        && !operacion.contains("/")&& !operacion.contains("%") && !operacion.contains("^")
-        && !operacion.contains("R"));
+        && !operacion.contains("R") && !operacion.isEmpty());
     }
     
     public static boolean validarMultiplicaion(String operacion){
         return (!operacion.endsWith("*") && !operacion.contains("+") && !operacion.contains("-")
         && !operacion.contains("/")&& !operacion.contains("%") && !operacion.contains("^")
-        && !operacion.contains("R"));
-    }
-    
-    public static boolean validarDivision(String operacion){
-        return (!operacion.contains("/") && !operacion.contains("+") && !operacion.contains("-")
-        && !operacion.contains("*")&& !operacion.contains("%") && !operacion.contains("^")
-        && !operacion.contains("R"));
+        && !operacion.contains("R") && !operacion.isEmpty());
     }
     
     public static boolean validarResiduo(String operacion){
         return (!operacion.contains("%") && !operacion.contains("+") && !operacion.contains("-")
         && !operacion.contains("*") && !operacion.contains("/") && !operacion.contains("^")
-        && !operacion.contains("R") && !operacion.contains("."));
+        && !operacion.contains("R") && !operacion.contains(".") && !operacion.isEmpty());
     }
     
-    public static boolean validarPotencia(String operacion){
+    public static boolean validarOperaciones(String operacion){
         return (!operacion.contains("+") && !operacion.contains("-") && !operacion.contains("*")
         && !operacion.contains("/")&& !operacion.contains("%") && !operacion.contains("^")
-        && !operacion.contains("R"));
+        && !operacion.contains("R") && !operacion.isEmpty());
     }
     
-    public static boolean validarRaiz(String operacion){
-        return (!operacion.contains("+") && !operacion.contains("-") && !operacion.contains("*")
-        && !operacion.contains("/")&& !operacion.contains("%") && !operacion.contains("^")
-        && !operacion.contains("R"));
+    public static boolean validarCalcDiscretos(String operacion){
+        return (!operacion.contains("!") && !operacion.contains("P") 
+        && !operacion.contains("C") && !operacion.isEmpty());
     }
 }
