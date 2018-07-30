@@ -14,7 +14,7 @@ public class CalcUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        ConversionGroup = new javax.swing.ButtonGroup();
         txtOp = new javax.swing.JTextField();
         btn6 = new javax.swing.JButton();
         btnAns = new javax.swing.JButton();
@@ -46,7 +46,7 @@ public class CalcUI extends javax.swing.JFrame {
         rbtnBinario = new javax.swing.JRadioButton();
         rbtnHexadecimal = new javax.swing.JRadioButton();
         rbtnOctal = new javax.swing.JRadioButton();
-        ConversionGroup = new javax.swing.JButton();
+        btnConversion = new javax.swing.JButton();
         pnlEx = new javax.swing.JPanel();
         btnSalir = new javax.swing.JButton();
         btnAC = new javax.swing.JButton();
@@ -356,19 +356,19 @@ public class CalcUI extends javax.swing.JFrame {
         getContentPane().add(pnlAritm);
         pnlAritm.setBounds(216, 71, 150, 240);
 
-        buttonGroup1.add(rbtnBinario);
+        ConversionGroup.add(rbtnBinario);
         rbtnBinario.setText("Binario");
 
-        buttonGroup1.add(rbtnHexadecimal);
+        ConversionGroup.add(rbtnHexadecimal);
         rbtnHexadecimal.setText("Hexadecimal");
 
-        buttonGroup1.add(rbtnOctal);
+        ConversionGroup.add(rbtnOctal);
         rbtnOctal.setText("Octal");
 
-        ConversionGroup.setText("Convertir");
-        ConversionGroup.addActionListener(new java.awt.event.ActionListener() {
+        btnConversion.setText("Convertir");
+        btnConversion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ConversionGroupActionPerformed(evt);
+                btnConversionActionPerformed(evt);
             }
         });
 
@@ -378,7 +378,7 @@ public class CalcUI extends javax.swing.JFrame {
             pnlConvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(rbtnHexadecimal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
             .addGroup(pnlConvLayout.createSequentialGroup()
-                .addComponent(ConversionGroup, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnConversion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(pnlConvLayout.createSequentialGroup()
                 .addGroup(pnlConvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -396,7 +396,7 @@ public class CalcUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(rbtnHexadecimal)
                 .addGap(18, 18, 18)
-                .addComponent(ConversionGroup, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnConversion, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -406,6 +406,11 @@ public class CalcUI extends javax.swing.JFrame {
         btnSalir.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnSalir.setText("S");
         btnSalir.setPreferredSize(new java.awt.Dimension(40, 50));
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
 
         btnAC.setText("AC");
         btnAC.setToolTipText("");
@@ -667,9 +672,19 @@ public class CalcUI extends javax.swing.JFrame {
         txtOp.setText(resultado);
     }//GEN-LAST:event_btnCalcularActionPerformed
 
-    private void ConversionGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConversionGroupActionPerformed
+    private void btnConversionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConversionActionPerformed
+        String operacion = txtOp.getText();
+        String resultado = "";
         
-    }//GEN-LAST:event_ConversionGroupActionPerformed
+        if (rbtnBinario.isSelected()) {
+            resultado = Funciones.decToBin(Integer.parseInt(operacion));
+        }else if (rbtnOctal.isSelected()) {
+            resultado = Funciones.decToOct(Integer.parseInt(operacion));
+        }else if (rbtnHexadecimal.isSelected()) {
+            resultado = Funciones.decToHex(Integer.parseInt(operacion));
+        }
+        txtOp.setText(resultado);
+    }//GEN-LAST:event_btnConversionActionPerformed
 
     private void itemEstandarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEstandarActionPerformed
         this.pnlCalcDisc.setVisible(false);
@@ -678,6 +693,8 @@ public class CalcUI extends javax.swing.JFrame {
         this.txtOp.setSize(420, 42);
         this.pnlEx.setLocation(374, 71);
         this.setSize(455, 370);
+        this.btnPunto.setEnabled(true);
+        this.btnAns.setEnabled(true);
     }//GEN-LAST:event_itemEstandarActionPerformed
 
     private void itemCalcDiscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCalcDiscActionPerformed
@@ -690,7 +707,6 @@ public class CalcUI extends javax.swing.JFrame {
         this.setSize(372, 370);
         this.btnPunto.setEnabled(false);
         this.btnAns.setEnabled(false);
-        
     }//GEN-LAST:event_itemCalcDiscActionPerformed
 
     private void itemConvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemConvActionPerformed
@@ -701,10 +717,16 @@ public class CalcUI extends javax.swing.JFrame {
         this.pnlConv.setLocation(216, 71);
         this.pnlConv.setVisible(true);
         this.setSize(419, 370);
+        this.btnPunto.setEnabled(false);
+        this.btnAns.setEnabled(false);
     }//GEN-LAST:event_itemConvActionPerformed
 
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnSalirActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ConversionGroup;
+    private javax.swing.ButtonGroup ConversionGroup;
     private javax.swing.JButton btn0;
     private javax.swing.JButton btn1;
     private javax.swing.JButton btn2;
@@ -719,6 +741,7 @@ public class CalcUI extends javax.swing.JFrame {
     private javax.swing.JButton btnAns;
     private javax.swing.JButton btnCalcular;
     private javax.swing.JButton btnCombinacion;
+    private javax.swing.JButton btnConversion;
     private javax.swing.JButton btnDEL;
     private javax.swing.JButton btnDivision;
     private javax.swing.JButton btnFactorial;
@@ -732,7 +755,6 @@ public class CalcUI extends javax.swing.JFrame {
     private javax.swing.JButton btnResta;
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnSuma;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JMenuItem itemCalcDisc;
     private javax.swing.JMenuItem itemConv;
     private javax.swing.JMenuItem itemEstandar;

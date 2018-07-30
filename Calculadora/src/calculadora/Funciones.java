@@ -79,7 +79,7 @@ public class Funciones {
         return Integer.toOctalString(numero);
     }
     
-    public static String decToHex(float numero){
-        return Float.toHexString(numero);
+    public static String decToHex(int numero){
+        return Integer.toHexString(numero);
     }
 }
