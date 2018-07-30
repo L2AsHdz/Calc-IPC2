@@ -4,44 +4,44 @@ import java.math.BigInteger;
 
 public class Funciones {
     
-    public static float suma(float[] sumandos){
-    float resultado = 0;
+    public static double suma(double[] sumandos){
+    double resultado = 0;
     for (int i = 0; i < sumandos.length; i++){
       resultado = resultado + sumandos[i];
       }
     return resultado;
     }
     
-    public static float resta(float minuendo, float sustraendo){
-        float diferencia = minuendo-sustraendo;
+    public static double resta(double minuendo, double sustraendo){
+        double diferencia = minuendo-sustraendo;
         return diferencia;
     }
     
-    public static float multiplicacion(float[] factores){
-    float resultado = 1;
+    public static double multiplicacion(double[] factores){
+    double resultado = 1;
     for (int i = 0; i < factores.length; i++){
       resultado = resultado * factores[i];
       }
     return resultado;
     }
     
-    public static float division(float divisor, float dividendo){
-        float cociente = dividendo/divisor;
+    public static double division(double divisor, double dividendo){
+        double cociente = dividendo/divisor;
         return cociente;
     }
     
-    public static float residuo(float divisor, float dividendo){
-        float residuo = dividendo%divisor;
+    public static double residuo(double divisor, double dividendo){
+        double residuo = dividendo%divisor;
         return residuo;
     }
     
-    public static float raiz(float indice, float radicando){
-        float resultado = (float)Math.pow(radicando, (1/indice));
+    public static double raiz(double indice, double radicando){
+        double resultado = (double)Math.pow(radicando, (1/indice));
         return resultado;
     }
     
-    public static float potencia(float exponente, float base){
-        float resultado = (float)Math.pow(base, exponente);
+    public static double potencia(double exponente, double base){
+        double resultado = (double)Math.pow(base, exponente);
         return resultado;
     }
     

@@ -30,4 +30,11 @@ public class Validaciones {
         return (!operacion.contains("!") && !operacion.contains("P") 
         && !operacion.contains("C") && !operacion.isEmpty());
     }
+    
+    public static boolean validarIgual(String operacion){
+        return (!operacion.endsWith("+") && !operacion.endsWith("-") && !operacion.endsWith("*")
+        && !operacion.endsWith("/")&& !operacion.endsWith("%") && !operacion.endsWith("^")
+        && !operacion.endsWith("R") && !operacion.endsWith("P") && !operacion.endsWith("C")
+        && !operacion.isEmpty());
+    }
 }

@@ -1,9 +1,12 @@
 package calculadora;
 
+import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
+
 public class CalcUI extends javax.swing.JFrame {
 
     boolean flagPunto = false;
-    float ans = 0;
+    double ans = 0;
     public CalcUI() {
         initComponents();
         this.pnlConv.setVisible(false);
@@ -607,33 +610,41 @@ public class CalcUI extends javax.swing.JFrame {
 
     private void btnIgualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIgualActionPerformed
         String operacion = txtOp.getText();
-        float resultado = 0;
-        
-        if (operacion.contains("+")) {
-            float[] sumandos = datos(operacion, "\\+");
-            resultado = Funciones.suma(sumandos);
-        }else if (operacion.contains("-")) {
-            float[] resta = datos(operacion, "\\-");
-            resultado = Funciones.resta(resta[0], resta[1]);
-        }else if (operacion.contains("*")) {
-            float[] factores = datos(operacion, "\\*");
-            resultado = Funciones.multiplicacion(factores);
-        }else if (operacion.contains("/")) {
-            float[] division = datos(operacion, "\\/");
-            resultado = Funciones.division(division[1], division[0]);
-        }else if (operacion.contains("%")) {
-            float[] residuo = datos(operacion, "%");
-            resultado = Funciones.residuo(residuo[1], residuo[0]);
-        }else if (operacion.contains("R")) {
-            float[] raiz = datos(operacion, "R");
-            resultado = Funciones.raiz(raiz[0], raiz[1]);
-        }else if (operacion.contains("^")) {
-            float[] potencia = datos(operacion, "\\^");
-            resultado = Funciones.potencia(potencia[1], potencia[0]);
+        if (Validaciones.validarIgual(operacion)) {
+            String resultado = operacion;
+            if (resultado.contains(".")) operacion = resultado.replaceAll("\\.", "0");
+
+            if (operacion.contains("+")) {
+                double[] sumandos = datos(operacion, "\\+");
+                resultado = String.valueOf(Funciones.suma(sumandos));
+            }else if (operacion.contains("-")) {
+                double[] resta = datos(operacion, "\\-");
+                resultado = String.valueOf(Funciones.resta(resta[0], resta[1]));
+            }else if (operacion.contains("*")) {
+                double[] factores = datos(operacion, "\\*");
+                resultado = String.valueOf(Funciones.multiplicacion(factores));
+            }else if (operacion.contains("/")) {
+                double[] division = datos(operacion, "\\/");
+                resultado = String.valueOf(Funciones.division(division[1], division[0]));
+            }else if (operacion.contains("%")) {
+                double[] residuo = datos(operacion, "%");
+                resultado = String.valueOf(Funciones.residuo(residuo[1], residuo[0]));
+            }else if (operacion.contains("R")) {
+                double[] raiz = datos(operacion, "R");
+                resultado = String.valueOf(Funciones.raiz(raiz[0], raiz[1]));
+            }else if (operacion.contains("^")) {
+                double[] potencia = datos(operacion, "\\^");
+                resultado = String.valueOf(Funciones.potencia(potencia[1], potencia[0]));
+            }
+
+            if (operacion.contains("/") || operacion.contains("%")){
+                if (operacion.endsWith("0")) txtOp.setText("No se puede dividir entre 0");
+            }else {
+            txtOp.setText(resultado);
+            }
+            
+            if (!resultado.equals(operacion)) ans = Double.parseDouble(resultado);
         }
-        
-        txtOp.setText(String.valueOf(resultado));
-        if (resultado != 0) ans = resultado;
     }//GEN-LAST:event_btnIgualActionPerformed
 
     private void btnFactorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFactorialActionPerformed
@@ -656,20 +667,22 @@ public class CalcUI extends javax.swing.JFrame {
 
     private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
         String operacion = txtOp.getText();
-        String resultado = "";
-        
-        if (operacion.contains("!")) {
-            int factorial = Integer.parseInt(txtOp.getText().substring(0, operacion.indexOf("!")));
-            resultado = Funciones.factorial(factorial);
-        }else if (operacion.contains("P")) {
-            int[] permutacion = datos2(operacion, "P");
-            resultado = Funciones.permutacion(permutacion[0], permutacion[1]);
-        }else if (operacion.contains("C")) {
-            int[] combinacion = datos2(operacion, "C");
-            resultado = Funciones.combinacion(combinacion[0], combinacion[1]);
+        if (Validaciones.validarIgual(operacion)) {
+            String resultado = operacion;
+
+            if (operacion.contains("!")) {
+                int factorial = Integer.parseInt(txtOp.getText().substring(0, operacion.indexOf("!")));
+                resultado = Funciones.factorial(factorial);
+            }else if (operacion.contains("P")) {
+                int[] permutacion = datos2(operacion, "P");
+                resultado = Funciones.permutacion(permutacion[0], permutacion[1]);
+            }else if (operacion.contains("C")) {
+                int[] combinacion = datos2(operacion, "C");
+                resultado = Funciones.combinacion(combinacion[0], combinacion[1]);
+            }   
+            
+            txtOp.setText(resultado);
         }
-        
-        txtOp.setText(resultado);
     }//GEN-LAST:event_btnCalcularActionPerformed
 
     private void btnConversionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConversionActionPerformed
@@ -677,11 +690,23 @@ public class CalcUI extends javax.swing.JFrame {
         String resultado = "";
         
         if (rbtnBinario.isSelected()) {
-            resultado = Funciones.decToBin(Integer.parseInt(operacion));
+            try {
+                resultado = Funciones.decToBin(Integer.parseInt(operacion));
+            } catch (Exception e) {
+                resultado = "No es un numero valido";
+            }
         }else if (rbtnOctal.isSelected()) {
-            resultado = Funciones.decToOct(Integer.parseInt(operacion));
+            try {
+                resultado = Funciones.decToOct(Integer.parseInt(operacion));
+            } catch (Exception e) {
+                resultado = "No es un numero valido";
+            }
         }else if (rbtnHexadecimal.isSelected()) {
-            resultado = Funciones.decToHex(Integer.parseInt(operacion));
+            try {
+                resultado = Funciones.decToHex(Integer.parseInt(operacion));
+            } catch (Exception e) {
+                resultado = "No es un numero valido";
+            }
         }
         txtOp.setText(resultado);
     }//GEN-LAST:event_btnConversionActionPerformed
@@ -771,11 +796,11 @@ public class CalcUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtOp;
     // End of variables declaration//GEN-END:variables
 
-    private float[] datos(String operacion, String splitter){
+    private double[] datos(String operacion, String splitter){
         String[] split = operacion.split(splitter);
-            float[] numeros = new float[split.length];
+            double[] numeros = new double[split.length];
             for (int i = 0; i < split.length; i++) {
-                numeros[i] = Float.parseFloat(split[i]);
+                numeros[i] = Double.parseDouble(split[i]);
             }
             return numeros;
     }
